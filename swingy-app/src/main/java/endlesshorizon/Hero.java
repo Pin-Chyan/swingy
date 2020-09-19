@@ -109,7 +109,6 @@ public class Hero implements Serializable {
 			lvl++;
 		}
 		this.level = lvl;
-		//statUpdate();
 	}
 
 	public int getLevel() {
@@ -213,6 +212,8 @@ public class Hero implements Serializable {
 		return acc;
 	}
 
+
+
 	public int getMapLvl() {
 		return this.mapLvl;
 	}
@@ -233,4 +234,11 @@ public class Hero implements Serializable {
 		this.x += 1;
 	}
 
+	public int getX() {
+		return this.x;
+	}
+
+	public int getY() {
+		return this.y;
+	}
 }
