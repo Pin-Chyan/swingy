@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Validator {
 
-	public static void startUp(Hero hero, Scanner commands) throws IOException {
+	public static Hero startUp(Hero hero, Scanner commands) throws IOException, InterruptedException {
 		System.out.println("Commands Available:");
 		System.out.println("1 | New Campaign");
 		System.out.println("2 | Load");
@@ -18,21 +18,23 @@ public class Validator {
 				FileHandler.newHero(hero ,commands);
 				break;
 			case "2":
-				FileHandler.loadHero(hero, commands);
-				break;
+				hero = FileHandler.loadHero(hero, commands);
+				return hero;
 			case "load":
-				FileHandler.loadHero(hero, commands);
-				break;
+				hero = FileHandler.loadHero(hero, commands);
+				return hero;
 			default:
 				System.out.println("Invalid Command. Try Again.");
 				startUp(hero, commands);
 				break;
-		}
+			}
+		return hero;
 	}
 
 	public static void newName(Hero hero, Scanner commands) {
 		System.out.print("Enter Hero Name: ");
-		hero.name = commands.nextLine();
+		String name = commands.nextLine();
+		hero.setName(name);
 	}
 
 	public static void selectClass(Hero hero, Scanner commands) {

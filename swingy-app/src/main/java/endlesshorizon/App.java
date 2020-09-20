@@ -11,12 +11,14 @@ import java.util.Scanner;
 public class App 
 {
 	
-	public static void main( String[] args ) throws IOException
+	public static void main( String[] args ) throws IOException, InterruptedException
     {
 		Hero hero = new Hero();
 		Scanner myObj = new Scanner(System.in);
-		
-		Validator.startUp(hero , myObj);
+
+		//GameEngine.unforeseenEvent();
+		hero = Validator.startUp(hero , myObj);
+		//System.out.println(hero);
 		GameEngine.gameStart(hero, myObj);
 	}
 

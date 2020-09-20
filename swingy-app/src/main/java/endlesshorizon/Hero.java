@@ -18,6 +18,7 @@ public class Hero implements Serializable {
 	protected int def;
 	protected int hp;
 	protected int maxhp;
+	protected int gold;
 	protected int armor;
 	protected int weapon;
 	protected int accessory;
@@ -25,10 +26,16 @@ public class Hero implements Serializable {
 	protected int x;
 	protected int y;
 
+	Hero(){
+	};
+
+	//public Hero() {
+		
+	//}
 		
 	@Override
 	public String toString() {
-		return "\n\nHero:\nName: " + name + "\nClass: " + Class + "\n\nStats:\n" +"Level: " + getLevel() + 
+		return "\n\nHero:\nName: " + this.name + "\nClass: " + this.Class + "\n\nStats:\n" +"Level: " + getLevel() + 
 		"\nExperience: " + getExp() + "\nAttack: " + getAtk() + "\nDefense: " + getDef() + "\nHit Points: " + hp + 
 		"/" + getMaxHp() + "\n\nEquipments:" + "\nArmor: " + getArmor() + "\nWeapon: " + getWeapon() +
 		"\nAccessory: " + getAccessory() + "\n\nCo-Ordinates:" + "\nMap Level: " + getMapLvl() + "\nX: " + x + "\nY: " + y;
@@ -56,6 +63,14 @@ public class Hero implements Serializable {
 		this.atk = Math.round(7 * (1 + (((float) level - 1) / 10)));
 		this.def = Math.round(5 * (1 + (((float) level - 1) / 10)));
 		this.hp = Math.round(15 * (1 + (((float) level - 1) / 10)));
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public void classSet(String Class) {
@@ -107,6 +122,7 @@ public class Hero implements Serializable {
 		this.exp = exp;
 		while (exp >= (lvl * 1000 + Math.pow(lvl - 1, 2) * 450)) {
 			lvl++;
+			System.out.println(this.name + " has leveled up to " + lvl);
 		}
 		this.level = lvl;
 	}
@@ -138,6 +154,14 @@ public class Hero implements Serializable {
 
 	public int getMaxHp() {
 		return this.hp + this.accessory;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	public int getGold() {
+		return this.gold;
 	}
 
 	public void setAtk(int value) {
@@ -219,18 +243,22 @@ public class Hero implements Serializable {
 	}
 
 	public void goNorth() {
+		System.out.println("You Have Gone North");
 		this.y += 1;
 	}
 
 	public void goSouth() {
+		System.out.println("You Have Gone South");
 		this.y -= 1;
 	}
 
 	public void goWest() {
+		System.out.println("You Have Gone West");
 		this.x -= 1;
 	}
 
 	public void goEast() {
+		System.out.println("You Have Gone East");
 		this.x += 1;
 	}
 
@@ -240,5 +268,15 @@ public class Hero implements Serializable {
 
 	public int getY() {
 		return this.y;
+	}
+
+	public void heroHit(int dmg, Creature creature) {
+		if (this.def > dmg) {
+			System.out.println(creature.name +" failed attack against the " + this.name);
+		} else {
+			int dmgDealt = (this.def - dmg);
+			System.out.println(creature.name + " Damage Inflicted: " + dmgDealt);
+			this.hp = this.hp - dmgDealt;
+		}
 	}
 }
