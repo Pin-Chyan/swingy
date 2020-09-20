@@ -1,1 +1,6 @@
 endlesshorizon\App.class
+endlesshorizon\FileHandler.class
+endlesshorizon\Validator.class
+endlesshorizon\Creature.class
+endlesshorizon\GameEngine.class
+endlesshorizon\Hero.class
