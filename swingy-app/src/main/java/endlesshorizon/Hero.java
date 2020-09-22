@@ -29,7 +29,7 @@ public class Hero implements Serializable {
 
 	Hero(){
 		level = 1;
-		exp = 1020;
+		exp = 1000;
 		gold = 100;
 		armor = 0;
 		weapon = 0;
@@ -39,17 +39,6 @@ public class Hero implements Serializable {
 		look = "                            __\r\n                         ,''  ``.\r\n                       .' ,'. `. `.\r\n                     .',':,-|,_ \\ .`,\r\n                      `. |-  - ; ).'\r\n                        \\|`'-.',\\)\r\n                       _..`   x<._\r\n                     ,'       x   `.\r\n                    |   _ -   x     |\r\n                    ; -'      _x  `.|\r\n                   :      _.-'/|`.  (\r\n                   |__..-'    `|  `-.\\\r\n                   /  |              |\r\n                   :  |              |\r\n                   |  |              :\r\n                   |  :    \\          :\r\n                   ;   \\    `         |\r\n                  :     \\         \\   |\r\n                  |      \\         :  |\r\n                  |  /   /\\        |  |\r\n                  | :   /__\\       |  |\r\n                  |    /   :: \\       :\r\n                  |   :|   |:          :\r\n                  |   ||.-.| \\     |   |\r\n                  ;   |)   (  ).   |   |\r\n                 :    ;\\___/  \\_\\  ;   |\r\n                 |   / |__[)  (]_\\     |\r\n                 |  :  |  :-  |  :)    |\r\n                 |  |  |  |-  |  |`.   |\r\n                 |  ;  |  |-  |  |  \\  |\r\n                 | /   |  ;\\  |  |   `.|\r\n                 |/    ;._\\'`-;  (._   \\\r\n                 |   ,/`-,(  / `,',_`._/\r\n                 |/`'(__.'   `-'.:__)";
 	};
 
-	//public void Hero() {
-	//	level = 1;
-	//	exp = 450;
-	//	gold = 0;
-	//	armor = 0;
-	//	weapon = 0;
-	//	accessory = 0;
-	//	x = 0;
-	//	y = 0;
-	//}
-		
 	@Override
 	public String toString() {
 		return "\n\nHero:\nName: " + this.name + "\nClass: " + this.Class + "\n\nStats:\n" +"Level: " + getLevel() + 

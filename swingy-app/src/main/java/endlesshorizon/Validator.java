@@ -20,9 +20,13 @@ public class Validator {
 				break;
 			case "2":
 				hero = FileHandler.loadHero(hero, commands);
+				System.out.println(hero);
+				Thread.sleep(10000);
 				return hero;
 			case "load":
 				hero = FileHandler.loadHero(hero, commands);
+				System.out.println(hero);
+				Thread.sleep(10000);
 				return hero;
 			default:
 				System.out.println("Invalid Command. Try Again.");

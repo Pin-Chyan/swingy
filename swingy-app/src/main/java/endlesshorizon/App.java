@@ -16,8 +16,8 @@ public class App
 		final Scanner myObj = new Scanner(System.in);
 
 		//(level-1)*5+10-(level%2)
-		//System.out.println((1-1)*5+10-(1%2));
-		//System.out.println(((1-1)*5+10-(1%2) -1) / 2);
+		System.out.println(((1-1)*5+10-(1%2) -1) / 2);
+		System.out.println(-((1-1)*5+10-(1%2) -1) / 2);
 
 		//GameEngine.unforeseenEvent();
 		hero = Validator.startUp(hero , myObj);

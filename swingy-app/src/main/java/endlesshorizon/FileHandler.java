@@ -11,18 +11,13 @@ import java.io.ObjectInputStream;
 public class FileHandler {
 	public static void writeToFile(Hero h) throws IOException, InterruptedException {
 		System.out.println(h);
-		Thread.sleep(10000);
+		Thread.sleep(5000);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(h.name + ".ser"));
 	
 		objectOutputStream.writeObject(h);
+		objectOutputStream.close();
 	}
 
-	public static void readFile(Hero hero,String name) throws IOException, ClassNotFoundException {
-		ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(name + ".ser"));
-		
-		hero = (Hero) objectInputStream.readObject();
-		System.out.println(hero);
-	}
 
 	public static void newHero(Hero hero, Scanner myObj) throws IOException, InterruptedException {
 		try {
@@ -40,35 +35,8 @@ public class FileHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//Validator.newName(hero, myObj);
-		//hero.setLevel(450);
-		//Validator.selectClass(hero, myObj);
-		//hero.statUpdate();
-		//try {
-		//	FileHandler.writeToFile(hero);
-		//} catch (IOException e) {
-		//	e.printStackTrace();
-		//	System.out.println(e.getMessage());
-		//}
 	}
 
-
-	//public static void createCharacter(String name, String heroClass) {
-    //    try {
-	//		Player player = new Player(name, heroClass);
-
-	//		// write object to file
-	//		FileOutputStream fos = new FileOutputStream("saves/heroes/" + name + ".ser");
-	//		ObjectOutputStream oos = new ObjectOutputStream(fos);
-	//		oos.writeObject(player);
-    //        oos.close();
-
-	//	} catch (FileNotFoundException e) {
-	//		e.printStackTrace();
-	//	} catch (IOException e) {
-	//		e.printStackTrace();
-	//	}
-	//}
 
 	public static void saveHero(Hero hero) throws IOException, InterruptedException {
 		try {
@@ -79,7 +47,7 @@ public class FileHandler {
 		}
 	}
 
-	public static Hero loadHero(Hero hero,Scanner myObj) throws IOException {
+	public static Hero loadHero(Hero hero,Scanner myObj) throws IOException, InterruptedException {
 		try {
 			System.out.print("Enter Hero Name: ");
 			String name = myObj.nextLine().toLowerCase();
@@ -93,6 +61,8 @@ public class FileHandler {
             return (result);
 
 		} catch (FileNotFoundException e) {
+			System.out.println("The File Name Which You Inserted Does Not Exist Please Try Again Or Make A New Campaign.");
+			System.exit(0);
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,12 +70,5 @@ public class FileHandler {
 			e.printStackTrace();
         }
         return (null);
-		//System.out.print("Enter Hero Name: ");
-		//String name = myObj.nextLine().toLowerCase();
-		//try {
-		//	FileHandler.readFile(hero ,name);
-		//} catch (ClassNotFoundException | IOException e) {
-		//	System.out.println(e.getMessage());
-		//}
 	}
 }

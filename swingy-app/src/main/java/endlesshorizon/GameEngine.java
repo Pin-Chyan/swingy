@@ -107,9 +107,10 @@ public class GameEngine {
 
 	public static void checkGameStatus(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		int outBound = ((hero.level - 1) * 5 + 10 - (hero.level % 2) - 1) / 2;
-		if (hero.x > outBound) {
+		int outNegBound = (-((hero.level - 1) * 5 + 10 - (hero.level % 2) - 1) / 2);
+		if (hero.x > outBound || hero.x < outNegBound) {
 			gameComplete();
-		} else if (hero.y > outBound) {
+		} else if (hero.y > outBound || hero.y < outNegBound) {
 			gameComplete();
 		} else {
 			moveHero(hero, commands);
@@ -128,13 +129,14 @@ public class GameEngine {
 		int chance = posibilityGen();
 		if (chance >= 1 && chance <= 10) {
 			treasureDrop(hero);
+			Thread.sleep(timewait);
 			checkGameStatus(hero, commands);
 		} else if (chance >= 11 && chance <= 60) {
 			creatureAppearance(hero, creature, commands);
 		} else {
 			System.out.println("Nothing appeared resuming exploration.");
-			checkGameStatus(hero, commands);
 			Thread.sleep(timewait);
+			checkGameStatus(hero, commands);
 		}
 	}
 
@@ -161,6 +163,10 @@ public class GameEngine {
 				checkGameStatus(hero, commands);
 				break;
 			default:
+				System.out.println("Invalid Command. Try Again.");
+				Thread.sleep(timewait);
+				creatureAppearance(hero, creature, commands);
+				break;
 		}
 	}
 
@@ -206,6 +212,11 @@ public class GameEngine {
 					System.out.println("Attempting to escape.");
 					Thread.sleep(timewait);
 					checkGameStatus(hero, commands);
+					break;
+				default:
+					System.out.println("Invalid Command. Try Again.");
+					Thread.sleep(timewait);
+					fightEvent(hero, creature, commands);
 					break;
 			}
 			if (hero.hp <= 0) {
@@ -280,6 +291,7 @@ public class GameEngine {
 	public static void showHeroStatus(Hero hero) {
 		clearScreen();
 		System.out.println("Hero Status:");
+		System.out.println(".:::.:::.\r\n:::::::::\r\n ':::::'\r\n   ':'");
 		hero.setLevel(hero.exp);
 		System.out.println("Level: " + hero.level);
 		System.out.println("Experience: " + hero.exp);
@@ -301,6 +313,7 @@ public class GameEngine {
 	public static void showInventory(Hero hero) {
 		clearScreen();
 		System.out.println("Inventory Status:");
+		System.out.println("   ___\r\n  /   \\\r\n |__%__|\r\n / : : \\\r\n(       )\r\n `-----'");
 		System.out.println("Gold: " + hero.getGold());
 		System.out.println("Weapon: " +hero.getWeapon());
 		System.out.println("Armor: " + hero.getArmor());
