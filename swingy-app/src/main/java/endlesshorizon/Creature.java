@@ -52,8 +52,10 @@ public class Creature {
 	}
 
 	public static int generateExpDrop() {
-		int Min = 100;
-		int Max = 250;
+		//int Min = 100;
+		int Min = 600;
+		//int Max = 250;
+		int Max = 700;
 		int exp = Min + (int)(Math.random() * ((Max - Min) + 1));
 		return exp;
 	}
@@ -62,9 +64,9 @@ public class Creature {
 		if (this.def > dmg) {
 			System.out.println("Failed attack against the " + this.name);
 		} else {
-			int dmgDealt = (this.def - dmg);
+			int dmgDealt = (dmg - this.def);
 			System.out.println("Damage Inflicted: " + dmgDealt);
-			this.hp = this.hp - dmgDealt;
+			this.hp -= dmgDealt;
 		}
 	}
 

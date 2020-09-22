@@ -1,6 +1,7 @@
 package endlesshorizon;
 
 import java.io.Serializable;
+import javax.validation.constraints.*;
 
 //import java.util.Objects;
 
@@ -12,6 +13,7 @@ public class Hero implements Serializable {
 
 	protected String name;
 	protected String Class; 
+	protected String look;
 	protected int level = 0;
 	protected int exp;
 	protected int atk;
@@ -22,23 +24,38 @@ public class Hero implements Serializable {
 	protected int armor;
 	protected int weapon;
 	protected int accessory;
-	protected int mapLvl = 1;
 	protected int x;
 	protected int y;
 
 	Hero(){
+		level = 1;
+		exp = 1020;
+		gold = 100;
+		armor = 0;
+		weapon = 0;
+		accessory = 0;
+		x = 0;
+		y = 0;
+		look = "                            __\r\n                         ,''  ``.\r\n                       .' ,'. `. `.\r\n                     .',':,-|,_ \\ .`,\r\n                      `. |-  - ; ).'\r\n                        \\|`'-.',\\)\r\n                       _..`   x<._\r\n                     ,'       x   `.\r\n                    |   _ -   x     |\r\n                    ; -'      _x  `.|\r\n                   :      _.-'/|`.  (\r\n                   |__..-'    `|  `-.\\\r\n                   /  |              |\r\n                   :  |              |\r\n                   |  |              :\r\n                   |  :    \\          :\r\n                   ;   \\    `         |\r\n                  :     \\         \\   |\r\n                  |      \\         :  |\r\n                  |  /   /\\        |  |\r\n                  | :   /__\\       |  |\r\n                  |    /   :: \\       :\r\n                  |   :|   |:          :\r\n                  |   ||.-.| \\     |   |\r\n                  ;   |)   (  ).   |   |\r\n                 :    ;\\___/  \\_\\  ;   |\r\n                 |   / |__[)  (]_\\     |\r\n                 |  :  |  :-  |  :)    |\r\n                 |  |  |  |-  |  |`.   |\r\n                 |  ;  |  |-  |  |  \\  |\r\n                 | /   |  ;\\  |  |   `.|\r\n                 |/    ;._\\'`-;  (._   \\\r\n                 |   ,/`-,(  / `,',_`._/\r\n                 |/`'(__.'   `-'.:__)";
 	};
 
-	//public Hero() {
-		
+	//public void Hero() {
+	//	level = 1;
+	//	exp = 450;
+	//	gold = 0;
+	//	armor = 0;
+	//	weapon = 0;
+	//	accessory = 0;
+	//	x = 0;
+	//	y = 0;
 	//}
 		
 	@Override
 	public String toString() {
 		return "\n\nHero:\nName: " + this.name + "\nClass: " + this.Class + "\n\nStats:\n" +"Level: " + getLevel() + 
 		"\nExperience: " + getExp() + "\nAttack: " + getAtk() + "\nDefense: " + getDef() + "\nHit Points: " + hp + 
-		"/" + getMaxHp() + "\n\nEquipments:" + "\nArmor: " + getArmor() + "\nWeapon: " + getWeapon() +
-		"\nAccessory: " + getAccessory() + "\n\nCo-Ordinates:" + "\nMap Level: " + getMapLvl() + "\nX: " + x + "\nY: " + y;
+		"/" + this.maxhp + "\n\nEquipments:" + "\nArmor: " + getArmor() + "\nWeapon: " + getWeapon() +
+		"\nAccessory: " + getAccessory() + "\n\nCo-Ordinates:" + "\nX: " + x + "\nY: " + y;
 	}
 
 	public void setPaladin(int level) {
@@ -56,7 +73,7 @@ public class Hero implements Serializable {
 	public void setWarrior(int level) {
 		this.atk = Math.round(8 * (1 + (((float) level - 1) / 10)));
 		this.def = Math.round(4 * (1 + (((float) level - 1) / 10)));
-		this.hp = Math.round(15 * (1 + (((float) level - 1) / 10)));
+		this.hp = Math.round(12 * (1 + (((float) level - 1) / 10)));
 	}
 
 	public void setFighter(int level) {
@@ -93,6 +110,7 @@ public class Hero implements Serializable {
 				setFighter(this.level);
 				break;
 		}
+		this.getMaxHp();
 	}
 
 	public void statUpdate() {
@@ -115,6 +133,7 @@ public class Hero implements Serializable {
 				setFighter(this.level);
 				break;
 		}
+		this.getMaxHp();
 	}
 
 	public void setLevel(int exp) {
@@ -122,9 +141,10 @@ public class Hero implements Serializable {
 		this.exp = exp;
 		while (exp >= (lvl * 1000 + Math.pow(lvl - 1, 2) * 450)) {
 			lvl++;
-			System.out.println(this.name + " has leveled up to " + lvl);
+			//System.out.println((lvl * 1000 + Math.pow(lvl - 1, 2) * 450));
 		}
-		this.level = lvl;
+		//System.out.println(this.name + " has leveled up to " + (lvl - 1));
+		this.level = lvl -1;
 	}
 
 	public int getLevel() {
@@ -136,8 +156,12 @@ public class Hero implements Serializable {
 	}
 
 	public void addExp(int exp) {
+		int currentlvl = this.level;
 		this.exp += exp;
 		setLevel(this.exp);
+		if (currentlvl < this.level) {
+			this.statUpdate();
+		}
 	}
 
 	public int getAtk() {
@@ -153,7 +177,17 @@ public class Hero implements Serializable {
 	}
 
 	public int getMaxHp() {
-		return this.hp + this.accessory;
+		this.maxhp = this.hp + this.accessory;
+		return this.maxhp;
+	}
+
+	public int updateNewMaxHp() { // after equipment update
+		if (maxhp == hp) {
+			return this.maxhp;
+		} else {
+			this.maxhp = this.maxhp + this.accessory;
+		}
+		return this.maxhp;
 	}
 
 	public void setGold(int gold) {
@@ -236,12 +270,6 @@ public class Hero implements Serializable {
 		return acc;
 	}
 
-
-
-	public int getMapLvl() {
-		return this.mapLvl;
-	}
-
 	public void goNorth() {
 		System.out.println("You Have Gone North");
 		this.y += 1;
@@ -271,12 +299,24 @@ public class Hero implements Serializable {
 	}
 
 	public void heroHit(int dmg, Creature creature) {
-		if (this.def > dmg) {
+		if (getDef() > dmg) {
 			System.out.println(creature.name +" failed attack against the " + this.name);
 		} else {
-			int dmgDealt = (this.def - dmg);
+			int dmgDealt = (dmg - getDef());
 			System.out.println(creature.name + " Damage Inflicted: " + dmgDealt);
-			this.hp = this.hp - dmgDealt;
+			this.hp -= dmgDealt;
+		}
+	}
+
+	public void regainHp() {
+		int Min = this.maxhp / 4;
+		int Max = this.maxhp;
+		int hpRegen = Min + (int)(Math.random() * ((Max - Min) + 1));
+		int hpRes = this.hp + hpRegen;
+		if (hpRes > this.maxhp) {
+			this.hp = this.maxhp;
+		} else {
+			this.hp = hpRes;
 		}
 	}
 }
