@@ -158,15 +158,27 @@ public class GameEngine {
 				fightEvent(hero, creature, commands);
 				break;
 			case "escape":
-				System.out.println("Attempting to escape.");
-				Thread.sleep(timewait);
-				checkGameStatus(hero, commands);
+				escapeChance(hero, creature, commands);
 				break;
 			default:
 				System.out.println("Invalid Command. Try Again.");
 				Thread.sleep(timewait);
 				creatureAppearance(hero, creature, commands);
 				break;
+		}
+	}
+
+	public static void escapeChance(Hero hero, Creature creature, Scanner commands)
+			throws InterruptedException, IOException {
+		int escape = posibilityGen();
+		if (escape >= 1 && escape <= 50) {
+			System.out.println("Failed to escape from creature now initiationg battle.\n");
+			Thread.sleep(timewait);
+			fightEvent(hero, creature, commands);
+		} else {
+			System.out.println("Succesfully escaped from creature now resuming adventuring.\n");
+			Thread.sleep(timewait);
+			checkGameStatus(hero, commands);
 		}
 	}
 
@@ -209,7 +221,8 @@ public class GameEngine {
 					heroDefTurn(hero);
 					break;
 				case "escape":
-					System.out.println("Attempting to escape.");
+					creatureChoice(hero, creature, commands);
+					escapeChance(hero, creature, commands);
 					Thread.sleep(timewait);
 					checkGameStatus(hero, commands);
 					break;
@@ -305,6 +318,7 @@ public class GameEngine {
 		//clearScreen();
 		System.out.println("");
 		System.out.println("Creature Status:");
+		System.out.println("Name: " + creature.name);
 		System.out.println("Attack: " + creature.atk);
 		System.out.println("Defense: " + creature.def);
 		System.out.println("Hit Points: " + creature.hp);
@@ -323,6 +337,7 @@ public class GameEngine {
 	public static void shopDisctrict(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		clearScreen();
 		System.out.println("Shopping District:");
+		System.out.println("\n~         ~~          __\r\n       _T      .,,.    ~--~ ^^\r\n ^^   // \\                    ~\r\n      ][O]    ^^      ,-~ ~\r\n   /''-I_I         _II____\r\n__/_  /   \\ ______/ ''   /'\\_,__\r\n  | II--'''' \\,--:--..,_/,.-{ },\r\n; '/__\\,.--';|   |[] .-.| O{ _ }\r\n:' |  | []  -|   ''--:.;[,.'\\,/\r\n'  |[]|,.--'' '',   ''-,.    |\r\n  ..    ..-''    ;       ''. '");
 		System.out.print(" | Blacksmith | Clinic | Home | ");
 		String goTo = commands.nextLine().toLowerCase();
 		switch (goTo) {
@@ -345,9 +360,9 @@ public class GameEngine {
 
 	public static void blacksmithItems(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		clearScreen();
-		System.out.println("Welcome To The Infamouse Smith-san");
-		System.out.println("");
 		showInventory(hero);
+		System.out.println("Welcome To The Infamouse Smith-san");
+		System.out.println(" ______\r\n|_,.,--\\\r\n   ||\r\n   ||\r\n   ##\r\n   ##");
 		System.out.println("");
 		System.out.println("Upgrades to:");
 		System.out.print(" | Weapon | Armor | Accessory | Leave | ");
@@ -376,6 +391,7 @@ public class GameEngine {
 	public static void weaponChoices(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		clearScreen();
 		System.out.println("So you want to upgrade your weapon?");
+		System.out.println("      /| ________________\r\nO|===|* >________________>\r\n      \\|");
 		System.out.println("10 Gold is required.");
 		System.out.print(" | Upgrade | Leave | ");
 		String choice = commands.nextLine().toLowerCase();
@@ -397,6 +413,7 @@ public class GameEngine {
 	public static void armorChoices(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		clearScreen();
 		System.out.println("So you want to upgrade your armor?");
+		System.out.println("   ___ ___\r\n /| |/|\\| |\\\r\n/_| \u00B4 |.` |_\\\r\n  |   |.  |\r\n  |   |.  |\r\n  |___|.__|");
 		System.out.println("10 Gold is required.");
 		System.out.print(" | Upgrade | Leave | ");
 		String choice = commands.nextLine().toLowerCase();
@@ -418,6 +435,7 @@ public class GameEngine {
 	public static void accessoryChoices(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		clearScreen();
 		System.out.println("So you want to upgrade your accessory?");
+		System.out.println("  _.+._\r\n(^\\/^\\/^)\r\n \\@*@*@/\r\n {_____}");
 		System.out.println("10 Gold is required.");
 		System.out.print(" | Upgrade | Leave | ");
 		String choice = commands.nextLine().toLowerCase();
@@ -478,6 +496,7 @@ public class GameEngine {
 	public static void clinicOptions(Hero hero, Scanner commands) throws InterruptedException, IOException {
 		clearScreen();
 		System.out.println("Welcome to the Clinic");
+		System.out.println(" __\r\n/_/\\/\\\r\n\\_\\  /\r\n/_/  \\\r\n\\_\\/\\ \\\r\n   \\_\\/");
 		System.out.print(" | Heal | Leave | ");
 		String choice = commands.nextLine().toLowerCase();
 		switch (choice) {
@@ -501,13 +520,16 @@ public class GameEngine {
 				hero.setGold(hero.getGold() - 1);
 				hero.setHp(hero.maxhp);
 				System.out.println("You have been healed up");
+				System.out.println("......\r\n:.  .:\r\n.'  '.\r\n|    |\r\n|    |\r\n`----'");
 				Thread.sleep(timewait);
 			} else {
 				System.out.println("You Do Not Have Enough Gold");
+				System.out.println("  ,---.\r\n ' __O>`\r\n( (__/  )\r\n .-----,\r\n  `---'");
 				Thread.sleep(timewait);
 			}
 		} else {
 			System.out.println("You are already on full Hp");
+			System.out.println(".:::.:::.\r\n:::::::::\r\n ':::::'\r\n   ':'");
 			Thread.sleep(timewait);
 		}
 		showHeroStatus(hero);
