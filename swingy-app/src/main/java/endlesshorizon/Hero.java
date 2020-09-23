@@ -11,21 +11,45 @@ public class Hero implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(message = "Class cannot be blank.")
 	protected String name;
+
 	protected String Class; 
+
 	protected String look;
-	protected int level = 0;
+	
+	@Min(value = 1, message = "Level can't be lower than zero.")
+	protected int level = 1;
+	
+	@NotNull(message = "Can't have null Experience.")
 	protected int exp;
+
+	@Min(value = 1, message = "Attack can not be beneath 1.")
 	protected int atk;
+
+	@Min(value = 1, message = "Defense can not be beneath 1.")
 	protected int def;
+
+	@Min(value = 5, message = "HP can not be beneath 10.")
 	protected int hp;
+
 	protected int maxhp;
+
 	protected int gold;
+
+	@NotNull(message = "Can't have null armor.")
 	protected int armor;
+
+	@NotNull(message = "Can't have null weapon.")
 	protected int weapon;
+
+	@NotNull(message = "Can't have null accessory.")
 	protected int accessory;
+
 	protected int x;
+
 	protected int y;
+
 
 	Hero(){
 		level = 1;
@@ -71,7 +95,7 @@ public class Hero implements Serializable {
 		this.hp = Math.round(15 * (1 + (((float) level - 1) / 10)));
 	}
 
-	public void setName(String name) {
+	public void setName(@NotBlank String name) {
 		this.name = name;
 	}
 
@@ -125,7 +149,7 @@ public class Hero implements Serializable {
 		this.getMaxHp();
 	}
 
-	public void setLevel(int exp) {
+	public void setLevel(@NotNull int exp) {
 		int lvl = 0;
 		this.exp = exp;
 		while (exp >= (lvl * 1000 + Math.pow(lvl - 1, 2) * 450)) {
@@ -187,27 +211,27 @@ public class Hero implements Serializable {
 		return this.gold;
 	}
 
-	public void setAtk(int value) {
+	public void setAtk(@Min(0) int value) {
 		this.atk = value;
 	}
 
-	public void setDef(int value) {
+	public void setDef(@Min(0) int value) {
 		this.def = value;
 	}
 
-	public void setHp(int value) {
+	public void setHp(@Min(0) int value) {
 		this.hp = value;
 	}
 
-	public void setArmor(int armor) {
+	public void setArmor(@NotNull int armor) {
 		this.armor = armor;
 	}
 
-	public void setWeapon(int weapon) {
+	public void setWeapon(@NotNull int weapon) {
 		this.weapon = weapon;
 	}
 
-	public void setAccessory(int acc) {
+	public void setAccessory(@NotNull int acc) {
 		this.accessory = acc;
 	}
 
