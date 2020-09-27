@@ -15,14 +15,22 @@ public class App
 		Hero hero = new Hero();
 		final Scanner myObj = new Scanner(System.in);
 
-		//GameEngine.unforeseenEvent();
-		hero = Validator.startUp(hero , myObj);
-		//System.out.println(hero);
-		GameEngine.gameStart(hero, myObj);
+		if (args.length != 1 || (!args[0].equals("console")) && (!args[0].equals("gui"))) {
+			System.out.println("Command is invalid please try again for instance:");
+			System.out.println("java -jar [path] console || gui");
+			System.exit(0);
+		}
 
+		if (args[0].equals("console")) {
+			hero = Validator.startUp(hero , myObj);
+			GameEngine.gameStart(hero, myObj);
+			System.exit(0);
+		} else if (args[0].equals("gui")) {
+			new Gui();
+			hero = Validator.startUp(hero , myObj);
+			GameEngine.gameStart(hero, myObj);
+			System.exit(0);
+		}
 	}
 
 }
-
-
-//level*1000+(level − 1)2*450.

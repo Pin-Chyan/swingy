@@ -52,9 +52,9 @@ public class Hero implements Serializable {
 
 
 	Hero(){
-		level = 1;
-		exp = 1000;
-		gold = 100;
+		level = 5;
+		exp = 12200;
+		gold = 0;
 		armor = 0;
 		weapon = 0;
 		accessory = 0;
